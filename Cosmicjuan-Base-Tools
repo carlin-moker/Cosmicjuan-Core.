@@ -1,0 +1,38 @@
+// Cosmicjuan.blockchain - Base Network SeaDrop Eligibility Tool
+// Designed for a decade and a thousand years.
+
+const { ethers } = require("ethers");
+
+// Dirección del contrato SeaDrop en Base
+const SEADROP_ADDRESS = "0x00005EA011010604F6946d0a700020c02010c0bb";
+
+// ABI mínima para consultar estadísticas de minteo (Elegibilidad)
+const SEADROP_ABI = [
+  "function getMintStats(address minter, address nftContract) view returns (uint256 minterNumMinted, uint256 currentMaxQueueSize, uint256 lastMaxQueueSize, uint256 maxTotalMintableByWallet)"
+];
+
+async function checkEligibility(minterAddress, nftContractAddress) {
+  // Configuración del proveedor de alta velocidad (RPC de Base)
+  const provider = new ethers.JsonRpcProvider("https://mainnet.base.org");
+  const contract = new ethers.Contract(SEADROP_ADDRESS, SEADROP_ABI, provider);
+
+  try {
+    const stats = await contract.getMintStats(minterAddress, nftContractAddress);
+    console.log(`--- Cosmicjuan.blockchain Report ---`);
+    console.log(`Minter: ${minterAddress}`);
+    console.log(`Total Minted: ${stats.minterNumMinted.toString()}`);
+    console.log(`Max Allowed: ${stats.maxTotalMintableByWallet.toString()}`);
+    
+    if (stats.minterNumMinted < stats.maxTotalMintableByWallet) {
+      console.log("Status: ELIGIBLE ✅");
+    } else {
+      console.log("Status: NOT ELIGIBLE ❌");
+    }
+  } catch (error) {
+    console.error("Error fetching SeaDrop data:", error);
+  }
+}
+
+// Ejemplo de uso con tu identidad yefris19.base.eth (sustituir por address si es necesario)
+// checkEligibility("TU_WALLET_ADDRESS", "DIRECCION_DEL_NFT");
+
