@@ -1,18 +1,22 @@
-# 🌌 Cosmicjuan-Core
+const ethers = require("ethers");
+require("dotenv").config();
 
-Bienvenido al repositorio oficial de **Cosmicjuan.blockchain**, un ecosistema descentralizado diseñado para integrar la identidad Web3 con activos digitales reales.
+async function checkNetwork() {
+    try {
+        // Conexión usando las llaves del archivo .env que acabas de arreglar
+        const provider = new ethers.providers.JsonRpcProvider(process.env.RPC_URL);
+        const wallet = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
 
-> "Es nuestro, tuyo y mío."
+        console.log("Conexión Exitosa a Cosmicjuan.blockchain");
+        console.log("Magnate Operando:", wallet.address);
+        
+        const balance = await provider.getBalance(wallet.address);
+        console.log("Saldo en la Red:", ethers.utils.formatEther(balance), "CJN");
 
-## 🚚 Visión del Proyecto
-Cosmicjuan.blockchain nace de la intersección entre el mundo del transporte logístico y la tecnología blockchain. Buscamos democratizar la propiedad de activos digitales mediante transparencia, seguridad y comunidad.
+    } catch (error) {
+        console.error("Error de Conexión: Revisa si el nodo está encendido.");
+    }
+}
 
-## 🛠️ Detalles Técnicos
-- **Red Principal:** Ethereum (Mainnet)
-- **Capa 2 Operativa:** Base Network
-- **Tokens de Utilidad:** $FORTUNAMEN, $VEONODOS.M, YO VEO NO
-
-## 👤 Identidad Web3
-- **ENS / Identidad Base:** `yefris19.base.eth`
-- **Dominio:** `Cosmicjuan.blockchain`
+checkNetwork();
 
