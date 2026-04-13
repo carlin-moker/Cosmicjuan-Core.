@@ -1,18 +1,23 @@
-# 🌌 Cosmicjuan-Core
 
-Bienvenido al repositorio oficial de **Cosmicjuan.blockchain**, un ecosistema descentralizado diseñado para integrar la identidad Web3 con activos digitales reales.
 
-> "Es nuestro, tuyo y mío."
+cat << 'EOF' > README.md
+# 🌌 CosmicGemLogistic Core
 
-## 🚚 Visión del Proyecto
-Cosmicjuan.blockchain nace de la intersección entre el mundo del transporte logístico y la tecnología blockchain. Buscamos democratizar la propiedad de activos digitales mediante transparencia, seguridad y comunidad.
+Bienvenido al repositorio central de **CosmicGemLogistic**. La capa de infraestructura soberana diseñada para blindar el linaje, gestionar el Family Vault y asegurar la cadena de valor física y digital. Cero dependencias. Soberanía técnica absoluta.
 
-## 🛠️ Detalles Técnicos
-- **Red Principal:** Ethereum (Mainnet)
-- **Capa 2 Operativa:** Base Network
-- **Tokens de Utilidad:** $FORTUNAMEN, $VEONODOS.M, YO VEO NO
+## 🚀 Visión del Proyecto
+Sinergia total entre la logística operativa del transporte de carga pesada y la infraestructura de bloques. Un sistema inmutable para el resguardo de activos y la transferencia generacional para los nietos.
 
-## 👤 Identidad Web3
-- **ENS / Identidad Base:** `yefris19.base.eth`
-- **Dominio:** `Cosmicjuan.blockchain`
+## 🛠 Detalles Técnicos
+* **Red Principal:** CosmicGemLogistic (Red Soberana Independiente)
+* **Mecanismo:** Family Vault & Smart Contracts en infraestructura propia.
+* **Seguridad:** Autenticación biométrica (Panel de Control Vampirio).
+* **Tokens de Utilidad:** $PRISMACORE y $ALONSOJUAN
 
+## 👤 Identidad
+* **Soberanía Técnica:** Identidades descentralizadas gestionadas nativamente en la red, sin depender de registradores de terceros.
+EOF
+
+git add README.md
+git commit -m "docs: actualizando README a la visión soberana de CosmicGemLogistic y Family Vault"
+git push origin main
