@@ -1,0 +1,8 @@
+{
+  "name": "cj-core-module",
+  "version": "1.0.0",
+  "description": "Core validation module",
+  "main": "core-access.js",
+  "private": true,
+  "license": "UNLICENSED"
+}
