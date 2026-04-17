@@ -1,22 +1,20 @@
-const ethers = require("ethers");
-require("dotenv").config();
+# 🌌 CosmicGemLogistic Core
 
-async function checkNetwork() {
-    try {
-        // Conexión usando las llaves del archivo .env que acabas de arreglar
-        const provider = new ethers.providers.JsonRpcProvider(process.env.RPC_URL);
-        const wallet = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
+Bienvenido al repositorio central de **CosmicGemLogistic**. La capa de infraestructura soberana diseñada para blindar el linaje, gestionar el Family Vault y asegurar la cadena de valor física y digital. Cero dependencias. Soberanía técnica absoluta.
 
-        console.log("Conexión Exitosa a Cosmicjuan.blockchain");
-        console.log("Magnate Operando:", wallet.address);
-        
-        const balance = await provider.getBalance(wallet.address);
-        console.log("Saldo en la Red:", ethers.utils.formatEther(balance), "CJN");
+# 🚀 Visión del Proyecto
 
-    } catch (error) {
-        console.error("Error de Conexión: Revisa si el nodo está encendido.");
-    }
-}
+Sinergia total entre la logística operativa del transporte de carga pesada y la infraestructura de bloques. Un sistema inmutable para el resguardo de activos y la transferencia generacional para los nietos.
 
-checkNetwork();
+# 🛠 Detalles Técnicos
+
+ **Red Principal:** CosmicGemLogistic (Red Soberana Independiente)
+
+* **Mecanismo:** Family Vault & Smart Contracts en infraestructura propia.
+
+* **Seguridad:** Autenticación biométrica (Panel de Control Vampirio).
+
+# 👤 Identidad
+
+ **Soberanía Técnica:** Identidades descentralizadas gestionadas nativamente en la red, sin depender de registradores externos.
 
