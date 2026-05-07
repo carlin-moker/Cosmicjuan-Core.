@@ -1,38 +1,70 @@
+// ==========================================================
 // Cosmicjuan.blockchain - Base Network SeaDrop Eligibility Tool
-// Designed for a decade and a thousand years.
+// Núcleo Técnico: Red 62 / HydraCore
+// Prioridad: Lógica Constructiva y Precisión Matemática
+// ==========================================================
 
 const { ethers } = require("ethers");
 
-// Dirección del contrato SeaDrop en Base
-const SEADROP_ADDRESS = "0x00005EA011010604F6946d0a700020c02010c0bb";
+// Configuración de Infraestructura
+const CONFIG = {
+    SEADROP_ADDRESS: "0x00005EA011010604F6946d0a700020c02010c0bb",
+    RPC_URL: "https://mainnet.base.org", // Autopista Base
+    ABI: [
+        "function getMintStats(address minter, address nftContract) view returns (uint256 minterNumMinted, uint256 currentMaxQueueSize, uint256 lastMaxQueueSize, uint256 maxTotalMintableByWallet)"
+    ]
+};
 
-// ABI mínima para consultar estadísticas de minteo (Elegibilidad)
-const SEADROP_ABI = [
-  "function getMintStats(address minter, address nftContract) view returns (uint256 minterNumMinted, uint256 currentMaxQueueSize, uint256 lastMaxQueueSize, uint256 maxTotalMintableByWallet)"
-];
+async function auditCGL() {
+    // 1. Definir Identidades (Ajusta estas dos direcciones)
+    const userIdentifier = "yefris19.base.eth"; // O tu wallet address
+    const nftContract = "DIRECCION_DEL_CONTRATO_NFT_AQUI"; 
 
-async function checkEligibility(minterAddress, nftContractAddress) {
-  // Configuración del proveedor de alta velocidad (RPC de Base)
-  const provider = new ethers.JsonRpcProvider("https://mainnet.base.org");
-  const contract = new ethers.Contract(SEADROP_ADDRESS, SEADROP_ABI, provider);
+    const provider = new ethers.JsonRpcProvider(CONFIG.RPC_URL);
+    const contract = new ethers.Contract(CONFIG.SEADROP_ADDRESS, CONFIG.ABI, provider);
 
-  try {
-    const stats = await contract.getMintStats(minterAddress, nftContractAddress);
-    console.log(`--- Cosmicjuan.blockchain Report ---`);
-    console.log(`Minter: ${minterAddress}`);
-    console.log(`Total Minted: ${stats.minterNumMinted.toString()}`);
-    console.log(`Max Allowed: ${stats.maxTotalMintableByWallet.toString()}`);
-    
-    if (stats.minterNumMinted < stats.maxTotalMintableByWallet) {
-      console.log("Status: ELIGIBLE ✅");
-    } else {
-      console.log("Status: NOT ELIGIBLE ❌");
+    console.log(`\n--- 🛡️ COSMICJUAN.BLOCKCHAIN AUDIT REPORT ---`);
+    console.log(`Fecha: ${new Date().toLocaleString()}`);
+    console.log(`Estatus de Red: CONECTADO A BASE`);
+    console.log(`------------------------------------------`);
+
+    try {
+        // Resolución de Identidad Soberana
+        console.log(`[*] Resolviendo Identidad: ${userIdentifier}...`);
+        const resolvedAddress = userIdentifier.includes(".") 
+            ? await provider.resolveName(userIdentifier) 
+            : userIdentifier;
+
+        if (!resolvedAddress) throw new Error("No se pudo resolver la dirección.");
+
+        // Consulta de Escáner de Carga (Mint Stats)
+        const stats = await contract.getMintStats(resolvedAddress, nftContract);
+        
+        const minted = stats.minterNumMinted;
+        const max = stats.maxTotalMintableByWallet;
+        const isEligible = minted < max;
+
+        console.log(`\nDetalles del Cargamento:`);
+        console.log(`> Billetera: ${resolvedAddress}`);
+        console.log(`> Contrato NFT: ${nftContract}`);
+        console.log(`> Minteados: ${minted.toString()}`);
+        console.log(`> Límite Máximo: ${max.toString()}`);
+        console.log(`------------------------------------------`);
+        
+        if (isEligible) {
+            console.log(`ESTADO: ELEGIBLE ✅ (Carga permitida)`);
+        } else {
+            console.log(`ESTADO: NO ELEGIBLE ❌ (Capacidad máxima alcanzada)`);
+        }
+
+    } catch (error) {
+        console.error(`\n[!] ERROR TÉCNICO:`, error.message);
+        console.log(`[!] Verifique la dirección del contrato y la conexión.`);
     }
-  } catch (error) {
-    console.error("Error fetching SeaDrop data:", error);
-  }
+    
+    console.log(`------------------------------------------`);
+    console.log(`Protección Divina Activada. El camión sigue su ruta.\n`);
 }
 
-// Ejemplo de uso con tu identidad yefris19.base.eth (sustituir por address si es necesario)
-// checkEligibility("TU_WALLET_ADDRESS", "DIRECCION_DEL_NFT");
-
+// Ejecución del núcleo
+auditCGL();
