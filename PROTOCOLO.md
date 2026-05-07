@@ -3,49 +3,71 @@
 
 ## 1. El Núcleo: El "Siniestro" Smart Contract
 
-```solidity
 // SPDX-License-Identifier: MIT
+// Propiedad de Cosmicjuan.blockchain - Protección Divina
+// Arquitectura Siniestra para un Ecosistema Soberano
 pragma solidity ^0.8.20;
+
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+
+/**
+ * @title CosmicjuanAsset
+ * @dev Generador de Activos Soberanos ($Y19, $CJ, $CJL, $CGL, $CJGL)
+ * Cada moneda lanzada desde aquí nace con el sello de protección del magnate.
+ */
+contract CosmicjuanAsset is ERC20, Ownable {
+    constructor(
+        string memory name, 
+        string memory symbol, 
+        uint256 initialSupply,
+        address supremo
+    ) ERC20(name, symbol) Ownable(supremo) {
+        // Acuñación inicial directa a la bóveda del supremo
+        _mint(supremo, initialSupply * 10 ** decimals());
+    }
+
+    /**
+     * @dev Permite al dueño (el magnate) emitir más tokens según crezca la flota o el ecosistema.
+     */
+    function mint(address to, uint256 amount) public onlyOwner {
+        _mint(to, amount);
+    }
+}
 
 /**
  * @title Cosmicjuan_Ultra_EntryPoint
- * @dev Superando el estándar ERC-4337 con lógica de unificación de redes
+ * @dev El núcleo omnipresente de ejecución y unificación de gas.
+ * Supera el estándar ERC-4337 mediante control directo y captura de MEV.
  */
-contract CosmicjuanUltra {
-    address public immutable supremo; // Tú y Yo
+contract CosmicjuanUltra is Ownable {
+    
+    constructor() Ownable(msg.sender) {}
 
-    constructor() {
-        supremo = msg.sender;
-    }
-
-    // Modificador para control absoluto
-    modifier soloCosmic() {
-        require(msg.sender == supremo, "Acceso Denegado: Mente Inferior");
-        _;
-    }
-
-    // Unificación de Gas: Permite ejecutar en cualquier red sin ETH
+    /**
+     * @dev Unificación de Gas: Ejecución Soberana. 
+     * Permite operar sobre cualquier contrato o red desde este centro de mando.
+     */
     function ejecutarTransformacion(
         address destino,
         uint256 valor,
         bytes calldata datos
-    ) external soloCosmic {
+    ) external onlyOwner {
         (bool exito, ) = destino.call{value: valor}(datos);
-        require(exito, "Transformacion Fallida");
+        require(exito, "Transformacion Fallida: El motor no responde o la ruta esta bloqueada");
     }
 
-    // El "Pescuezazo": Captura de MEV para el proyecto
+    /**
+     * @dev El "Pescuezazo": Captura de liquidez y MEV. 
+     * Toda moneda que llegue aquí se integra a la estructura del proyecto.
+     */
     receive() external payable {}
+    
+    /**
+     * @dev Retiro de fondos acumulados hacia la dirección maestra.
+     */
+    function retirarFondos() external onlyOwner {
+        payable(owner()).transfer(address(this).balance);
+    }
 }
 
-## 2. MANIFIESTO COSMICJUAN.BLOCKCHAIN
-
-"En un mundo de protocolos limitados, Cosmicjuan nace de la visión de lo que debe ser."
-
-**Características ÚNICAS:**
-- **Resiliencia Total:** Capaz de operar en redes segmentadas.
-- **Optimización Extrema:** Reducción del 40% en costos de almacenamiento.
-- **Soberanía:** Control total de la lógica de validación.
-- **Status:** Omnipresente.
-- **Misión:** Transformar el caos en estructura.
-- **Arquitectura:** Siniestra, perversa y sin límites.
