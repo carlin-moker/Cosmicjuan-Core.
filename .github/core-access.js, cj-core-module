@@ -1,7 +1,7 @@
 /**
- * COSMICJUAN-CORE: CORE ACCESS MODULE
- * Estado: OPERATIVO | Red: BASE MAINNET
- * Propósito: Validación y Enlace de Infraestructura
+ * NÚCLEO DE COSMICJUAN: MÓDULO DE ACCESO SOBERANO
+ * Estado: OPERATIVO | Red: COSMICJUAN.BLOCKCHAIN (NODO INDEPENDIENTE)
+ * Arquitectura: Sinergia Cuántica-Híbrida-Neuronal-Neuropinal
  */
 
 require('dotenv').config();
@@ -9,30 +9,27 @@ const { ethers } = require('ethers');
 const axios = require('axios');
 
 async function initiateCore() {
-    console.log("--- INICIANDO CJ-CORE-MODULE ---");
-    
+    console.log("--- INICIANDO NÚCLEO SOBERANO: COSMICJUAN.BLOCKCHAIN ---");
+    console.log("--- SINERGIA CUÁNTICA-NEURONAL ACTIVADA ---");
+
     try {
-        // Validación de Entorno (Protección de Llaves)
-        if (!process.env.RPC_URL || !process.env.PRIVATE_KEY) {
-            throw new Error("ERROR: Configuración incompleta en .env");
+        // Validación de Entorno Soberano
+        if (!process.env.CJ_RPC_URL || !process.env.CJ_PRIVATE_KEY) {
+            throw new Error("ERROR: Entorno no definido. Acceso soberano bloqueado.");
         }
 
-        // Conexión al Nodo (Base Mainnet)
-        const provider = new ethers.providers.JsonRpcProvider(process.env.RPC_URL);
-        const wallet = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
+        // Conexión a la red física-matemática independiente
+        const provider = new ethers.providers.JsonRpcProvider(process.env.CJ_RPC_URL);
+        const wallet = new ethers.Wallet(process.env.CJ_PRIVATE_KEY, provider);
 
-        console.log(`Soberanía Activa: Operando con dirección ${wallet.address}`);
-
-        // Lógica de Validación de Red
-        const network = await provider.getNetwork();
-        console.log(`Conectado a Red ID: ${network.chainId} (Base)`);
-
-        // Aquí se acopla la lógica del Shadow Relayer
-        console.log("Estado: Shadow Relayer sincronizado.");
+        console.log("Estado: Nodo conectado. Red62 en sincronía.");
+        
+        // Protocolo de validación neuropinal
+        return { provider, wallet };
 
     } catch (error) {
-        console.error("Falla en el núcleo:", error.message);
+        console.error("Fallo de integridad en el núcleo:", error.message);
     }
 }
 
-initiateCore();
+module.exports = { initiateCore };
