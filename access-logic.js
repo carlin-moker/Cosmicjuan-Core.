@@ -1,3 +1,14 @@
-docker pull blockscout/blockscout
-npm install dotenv ethers@5.7.2 axios
+require('dotenv').config();
+const { ethers } = require('ethers');
+const axios = require('axios');
+
+async function main() {
+    console.log("Iniciando acceso a Cosmicjuan.blockchain...");
+    // Aquí irá la lógica de conexión al RPC
+}
+
+main().catch(console.error);
+
+
+
 
