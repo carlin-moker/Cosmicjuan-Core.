@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: PROPIEDAD_PROHIBIDA_RED_62
 // Sistema: SINERGIA NEURONAL HÍBRIDA CUÁNTICA
-// Estado: SOBERANÍA TOTAL ACTIVA - NODO_MAESTRO_RED62_LARA
+// Estado: SOBERANÍA TOTAL ACTIVA - NODO_MAESTRO_RED62
 
 pragma solidity ^0.8.20;
 
@@ -32,7 +32,7 @@ contract CosmicQuantumNucleus_Red62 is ERC721URIStorage, EIP712 {
     mapping(uint256 => bool) public usedNonces;
 
     // Código de Honor: "Damos sin esperar, pero gobernamos lo que construimos."
-    modifier soloMaestroLara() {
+    modifier soloMaestroNodoRed62() {
         require(msg.sender == OperadorAlpha, "ERROR: Acceso nulo. Carece de autoridad tecnica Red 62.");
         _;
     }
@@ -53,7 +53,7 @@ contract CosmicQuantumNucleus_Red62 is ERC721URIStorage, EIP712 {
         address to, 
         string memory uri, 
         string memory _idLinaje
-    ) external soloMaestroLara {
+    ) external soloMaestroNodoRed62 {
         uint256 tokenId = uint256(keccak256(abi.encodePacked(block.timestamp, _idLinaje)));
         
         bytes32 idCripto = keccak256(abi.encodePacked(
@@ -87,7 +87,7 @@ contract CosmicQuantumNucleus_Red62 is ERC721URIStorage, EIP712 {
         uint256 payload,
         uint256 nonce,
         bytes calldata signature
-    ) external soloMaestroLara returns (bool) {
+    ) external soloMaestroNodoRed62 returns (bool) {
         require(!usedNonces[nonce], "Nonce ya validado en Red 62");
 
         bytes32 structHash = _hashTypedDataV4(keccak256(abi.encode(
