@@ -1,14 +1,18 @@
 version: 2
 updates:
-  # Vigilancia de dependencias Node.js (npm)
+  # Vigilancia de dependencias del núcleo soberano
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
       interval: "daily"
     open-pull-requests-limit: 5
+    # Nota: Asegurar que los feeds de dependencias sean privados o controlados
+    # para mantener la integridad de la red62.
 
-  # Vigilancia de contenedores (Blockscout Docker)
+  # Vigilancia de infraestructura (Docker)
   - package-ecosystem: "docker"
     directory: "/"
     schedule:
       interval: "weekly"
+    # IMPORTANTE: Configurar para apuntar a registros de contenedores 
+    # propios y soberanos de Cosmicjuan.blockchain
