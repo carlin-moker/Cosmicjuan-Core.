@@ -1,70 +1,67 @@
-// ==========================================================
-// Cosmicjuan.blockchain - Base Network SeaDrop Eligibility Tool
-// Núcleo Técnico: Red 62 / HydraCore
-// Prioridad: Lógica Constructiva y Precisión Matemática
-// ==========================================================
+/**
+ * ==============================================================================
+ * Cosmicjuan.blockchain - HERRAMIENTA DE ELEGIBILIDAD SOBERANA
+ * Núcleo Técnico: Red 62 / HydraCore
+ * Estado: INDEPENDIENTE / SINCRETISMO CUÁNTICO-NEURONAL
+ * ==============================================================================
+ */
 
 const { ethers } = require("ethers");
 
-// Configuración de Infraestructura
+// Configuración de Infraestructura Soberana
 const CONFIG = {
-    SEADROP_ADDRESS: "0x00005EA011010604F6946d0a700020c02010c0bb",
-    RPC_URL: "https://mainnet.base.org", // Autopista Base
+    // La dirección debe apuntar al contrato de despliegue en HydraCore
+    SEADROP_ADDRESS: "0x00005EA011010604F6946d0a700020c02010c0bb", 
+    // Endpoint privado de la red soberana
+    RPC_URL: process.env.CJ_SOVEREIGN_RPC_URL, 
     ABI: [
-        "function getMintStats(address minter, address nftContract) view returns (uint256 minterNumMinted, uint256 currentMaxQueueSize, uint256 lastMaxQueueSize, uint256 maxTotalMintableByWallet)"
+        "function getMintStats(address minter, address nftContract) view returns (tuple(uint256 minterNumMinted, uint256 maxTotalMintableByWallet))"
     ]
 };
 
 async function auditCGL() {
-    // 1. Definir Identidades (Ajusta estas dos direcciones)
-    const userIdentifier = "yefris19.base.eth"; // O tu wallet address
-    const nftContract = "DIRECCION_DEL_CONTRATO_NFT_AQUI"; 
-
-    const provider = new ethers.JsonRpcProvider(CONFIG.RPC_URL);
-    const contract = new ethers.Contract(CONFIG.SEADROP_ADDRESS, CONFIG.ABI, provider);
-
-    console.log(`\n--- 🛡️ COSMICJUAN.BLOCKCHAIN AUDIT REPORT ---`);
+    console.log("\n--- 🛡️ COSMICJUAN: INFORME DE AUDITORÍA SOBERANA ---");
     console.log(`Fecha: ${new Date().toLocaleString()}`);
-    console.log(`Estatus de Red: CONECTADO A BASE`);
-    console.log(`------------------------------------------`);
+    console.log("Estatus de Red: NODO SOBERANO (Red62) ACTIVADO");
+    console.log("--------------------------------------------------");
 
     try {
-        // Resolución de Identidad Soberana
-        console.log(`[*] Resolviendo Identidad: ${userIdentifier}...`);
-        const resolvedAddress = userIdentifier.includes(".") 
-            ? await provider.resolveName(userIdentifier) 
-            : userIdentifier;
+        const provider = new ethers.providers.JsonRpcProvider(CONFIG.RPC_URL);
+        const contract = new ethers.Contract(CONFIG.SEADROP_ADDRESS, CONFIG.ABI, provider);
 
-        if (!resolvedAddress) throw new Error("No se pudo resolver la dirección.");
+        const userIdentifier = process.env.USER_IDENTITY; // Identidad de la billetera soberana
+        const nftContract = process.env.CONTRACT_ADDRESS;
 
-        // Consulta de Escáner de Carga (Mint Stats)
+        // Resolución de Identidad a través del registro interno
+        console.log(`[*] Resolviendo Identidad Neuronal: ${userIdentifier}...`);
+        const resolvedAddress = await provider.resolveName(userIdentifier) || userIdentifier;
+
+        // Consulta al Contrato Inteligente (Sincronía Cuántica)
         const stats = await contract.getMintStats(resolvedAddress, nftContract);
-        
+
         const minted = stats.minterNumMinted;
         const max = stats.maxTotalMintableByWallet;
         const isEligible = minted < max;
 
-        console.log(`\nDetalles del Cargamento:`);
+        console.log('\n> Detalles del Cargamento (Red62):');
         console.log(`> Billetera: ${resolvedAddress}`);
         console.log(`> Contrato NFT: ${nftContract}`);
-        console.log(`> Minteados: ${minted.toString()}`);
+        console.log(`> Mintedos: ${minted.toString()}`);
         console.log(`> Límite Máximo: ${max.toString()}`);
-        console.log(`------------------------------------------`);
-        
+
         if (isEligible) {
-            console.log(`ESTADO: ELEGIBLE ✅ (Carga permitida)`);
+            console.log('ESTADO: ELEGIBLE ✅ (Carga permitida por Red62)');
         } else {
-            console.log(`ESTADO: NO ELEGIBLE ❌ (Capacidad máxima alcanzada)`);
+            console.log('ESTADO: NO ELEGIBLE ❌ (Capacidad máxima alcanzada en HydraCore)');
         }
 
     } catch (error) {
-        console.error(`\n[!] ERROR TÉCNICO:`, error.message);
-        console.log(`[!] Verifique la dirección del contrato y la conexión.`);
+        console.error('\n[!] ERROR NEUROPINAL:', error.message);
+        console.log('[!] Verifique la sincronía del nodo soberano y la dirección del contrato.');
     }
     
-    console.log(`------------------------------------------`);
-    console.log(`Protección Divina Activada. El camión sigue su ruta.\n`);
+    console.log('--------------------------------------------------');
+    console.log('Protección Divina Activada. La ruta cuántica permanece estable.');
 }
 
-// Ejecución del núcleo
 auditCGL();
